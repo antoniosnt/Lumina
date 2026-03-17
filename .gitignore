@@ -1,0 +1,181 @@
+# ============================================================
+# MONOREPO — .gitignore
+# Covers: Next.js, Bun, Node.js, Python (LLM), general tooling
+# ============================================================
+
+
+# ──────────────────────────────────────────
+# DEPENDENCIES
+# ──────────────────────────────────────────
+node_modules/
+.pnp
+.pnp.js
+.yarn/install-state.gz
+
+
+# ──────────────────────────────────────────
+# BUILD OUTPUTS
+# ──────────────────────────────────────────
+.next/
+out/
+dist/
+build/
+*.tsbuildinfo
+next-env.d.ts
+
+
+# ──────────────────────────────────────────
+# ENVIRONMENT & SECRETS
+# ──────────────────────────────────────────
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+
+# ──────────────────────────────────────────
+# BUN
+# ──────────────────────────────────────────
+bun.lockb
+# Manter bun.lock se quiser versionar (opcional)
+# bun.lock
+
+
+# ──────────────────────────────────────────
+# CACHES
+# ──────────────────────────────────────────
+.cache/
+.turbo/
+.parcel-cache/
+.eslintcache
+.stylelintcache
+*.tsbuildinfo
+.swc/
+
+
+# ──────────────────────────────────────────
+# LOGS
+# ──────────────────────────────────────────
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+bun-debug.log*
+
+
+# ──────────────────────────────────────────
+# TESTING
+# ──────────────────────────────────────────
+coverage/
+.nyc_output/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+
+# ──────────────────────────────────────────
+# PYTHON / LLM PROJECT
+# ──────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Pip / Poetry / uv
+*.egg-info/
+dist/
+pip-wheel-metadata/
+.pip-cache/
+poetry.lock         # remova esta linha se quiser versionar o lock
+uv.lock             # remova esta linha se quiser versionar o lock
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+*.ipynb
+
+# ML / LLM artifacts
+models/
+*.bin
+*.gguf
+*.ggml
+*.safetensors
+*.pt
+*.pth
+*.onnx
+*.pkl
+*.joblib
+chroma/
+faiss_index/
+vectorstore/
+embeddings/
+
+# HuggingFace cache
+.cache/huggingface/
+
+
+# ──────────────────────────────────────────
+# SISTEMA OPERACIONAL
+# ──────────────────────────────────────────
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+
+
+# ──────────────────────────────────────────
+# EDITORES & IDEs
+# ──────────────────────────────────────────
+
+# VS Code (manter settings compartilhadas, ignorar pessoais)
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+
+# JetBrains (WebStorm, PyCharm, etc.)
+.idea/
+*.iml
+
+# Vim / Emacs
+*.swp
+*.swo
+*~
+\#*\#
+
+
+# ──────────────────────────────────────────
+# DOCKER (se aplicável)
+# ──────────────────────────────────────────
+.docker/
+docker-compose.override.yml
+
+
+# ──────────────────────────────────────────
+# MISC
+# ──────────────────────────────────────────
+*.local
+.vercel
+.netlify
+tmp/
+temp/
