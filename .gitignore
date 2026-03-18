@@ -152,6 +152,7 @@ $RECYCLE.BIN/
 !.vscode/extensions.json
 !.vscode/launch.json
 !.vscode/tasks.json
+.claude
 
 # JetBrains (WebStorm, PyCharm, etc.)
 .idea/
