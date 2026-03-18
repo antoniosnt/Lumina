@@ -141,7 +141,8 @@
 	justify-content: center;
 	border: 1px solid var(--secondary);
 	border-radius: 12px;
-	gap: 10;
+	gap: 10px;
+	padding: 64px;
 }
 
 .AppForm__Container {
@@ -158,14 +159,28 @@
 	align-items: start;
 	justify-content: start;
 	margin: 32px 32px 0 32px;
-	gap: 10;
+	gap: 10px;
+	width: 100%;
 }
 
 .AppForm__Container--Buttons {
 	display: grid;
-	grid-template-columns: 1fr 1fr;
+	grid-template-columns: 1fr;
 	align-items: center;
 	justify-content: center;
-	gap: 10;
-	margin: 32px 0;
+	width: 100%;
+	gap: 10px;
+	margin: 32px 0 0 0;
+
+	& span {
+		color: #551A8B;
+		font-size: 12px;
+		font-weight: 500;
+		margin: 12px 0;
+		text-align: center;
+	}
+
+	& button {
+		padding: 24px;
+	}
 }
