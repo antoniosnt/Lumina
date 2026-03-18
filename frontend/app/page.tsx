@@ -17,6 +17,10 @@ type HomeProps = {
 	passwordPlaceholder?: string;
 };
 
+/**
+ * @author Antonio Santana G. Neto
+ * @description SSH CONNECTION TESTING
+ */
 export default function Home({
 	emailPlaceholder = "example@domain.com",
 	passwordPlaceholder = "********",
