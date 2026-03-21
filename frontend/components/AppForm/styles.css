@@ -1,0 +1,45 @@
+.AppForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--secondary);
+  border-radius: 12px;
+}
+
+.AppForm__Div {
+  margin: 32px;
+}
+
+.AppForm__Container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 24px;
+}
+
+.AppForm__Container--Label {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+  margin: 32px 32px 0 32px;
+  width: 100%;
+  gap: 10px;
+}
+
+.AppForm__Container--Buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  margin: 64px 0 0 0;
+}
+
+.AppForm__Container--SignUp {
+  color: black;
+  text-decoration: underline;
+}

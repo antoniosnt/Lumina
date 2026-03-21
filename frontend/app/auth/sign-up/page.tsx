@@ -1,9 +1,19 @@
-const Register = () => {
+// Components
+import AppForm from "@/components/AppForm";
+
+const SignUp = () => {
   return (
-    <main>
-      <span>Oiiiii</span>
+      <main className="AppMain">
+      {
+        <AppForm
+          emailPlaceholder="Email"
+          passwordPlaceholder="Password"
+          onSubmit={() => console.log("Hello World")}
+          type="signUp"
+        />
+      }
     </main>
   )
 }
 
-export default Register;
+export default SignUp;

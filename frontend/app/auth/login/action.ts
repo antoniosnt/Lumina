@@ -17,8 +17,9 @@ const onSubmit = async (formData: FormData) => {
 		};
 
 		const cookieStore = await cookies();
-		cookieStore.set("access_token", access, { httpOnly: true, secure: true });
-		cookieStore.set("refresh_token", refresh, { httpOnly: true, secure: true });
+		const secure = process.env.NODE_ENV === "production";
+		cookieStore.set("access_token", access, { httpOnly: true, secure });
+		cookieStore.set("refresh_token", refresh, { httpOnly: true, secure });
 	} catch (e) {
 		console.error(e);
 	}
