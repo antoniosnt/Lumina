@@ -14,28 +14,36 @@ export function formatPayloadEntries(formData: FormData) {
 	return Object.fromEntries(filtered);
 }
 
-export function getCustomHeaders() {
-	return {
-		"Content-Type": "application/json",
-		Accept: "application/json",
-	};
-}
-
 // Axios instance with base url and custom headers.
 const api = axios.create({
 	baseURL: process.env.NEXT_SERVER_API,
-	headers: getCustomHeaders(),
+	headers: {
+		"Content-Type": "application/json",
+	},
 });
 
 // Factory to create axios instance with url.
-export function axiosInstance(url: string) {
+export function axiosInstance(url: string, token?: string) {
 	return {
-		get: <T>(params?: Record<string, string>) => api.get<T>(url, { params }),
+		get: <T>(params?: Record<string, string>) =>
+			api.get<T>(url, {
+				params,
+				headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+			}),
 
-		post: <T>(data?: unknown) => api.post<T>(url, data),
+		post: <T>(data?: unknown) =>
+			api.post<T>(url, data, {
+				headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+			}),
 
-		put: <T>(data?: unknown) => api.put<T>(url, data),
+		put: <T>(data?: unknown) =>
+			api.put<T>(url, data, {
+				headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+			}),
 
-		delete: <T>() => api.delete<T>(url),
+		delete: <T>() =>
+			api.delete<T>(url, {
+				headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+			}),
 	};
 }
