@@ -29,6 +29,13 @@
   gap: 10px;
 }
 
+.AppForm__Container--Row {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  width: 100%;
+}
+
 .AppForm__Container--Buttons {
   display: flex;
   flex-direction: column;
@@ -39,7 +46,14 @@
   margin: 64px 0 0 0;
 }
 
-.AppForm__Container--SignUp {
-  color: black;
+.AppForm__Container--Link {
+  color: var(--foreground);
   text-decoration: underline;
+}
+
+.AppForm__Error {
+  color: var(--destructive);
+  text-align: center;
+  font-size: 0.875rem;
+  margin-top: 8px;
 }

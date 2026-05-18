@@ -1,15 +1,19 @@
 "use server";
 
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import { axiosInstance } from "@/lib/utils";
 
-const onSubmit = async (formData: FormData) => {
-	try {
-		const payload = {
-			username: formData.get("email") as string,
-			password: formData.get("password") as string,
-		};
+export default async function loginAction(
+	_prevState: { error: string } | null,
+	formData: FormData,
+): Promise<{ error: string } | null> {
+	const payload = {
+		username: formData.get("email") as string,
+		password: formData.get("password") as string,
+	};
 
+	try {
 		const response = await axiosInstance("/api/auth/login/").post(payload);
 		const { access, refresh } = response.data as {
 			access: string;
@@ -18,11 +22,21 @@ const onSubmit = async (formData: FormData) => {
 
 		const cookieStore = await cookies();
 		const secure = process.env.NODE_ENV === "production";
-		cookieStore.set("access_token", access, { httpOnly: true, secure });
-		cookieStore.set("refresh_token", refresh, { httpOnly: true, secure });
-	} catch (e) {
-		console.error(e);
+		cookieStore.set("access_token", access, {
+			httpOnly: true,
+			secure,
+			sameSite: "lax",
+			path: "/",
+		});
+		cookieStore.set("refresh_token", refresh, {
+			httpOnly: true,
+			secure,
+			sameSite: "lax",
+			path: "/",
+		});
+	} catch {
+		return { error: "Invalid credentials. Please try again." };
 	}
-};
 
-export default onSubmit;
+	redirect("/");
+}

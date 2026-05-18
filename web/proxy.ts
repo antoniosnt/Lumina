@@ -1,18 +1,30 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-// This function can be marked `async` if using `await` inside
-export function proxy(request: NextRequest) {
-	console.log(
-		`\n\x1b[34m[INFO] PROXY\x1b[0m`,
-		{ requestUrl: request.url, method: request.method },
-		`\n`,
-	);
+const publicPaths = ["/auth/login", "/auth/sign-up"];
+
+export default function proxy(request: NextRequest) {
+	const { pathname } = request.nextUrl;
+	const accessToken = request.cookies.get("access_token")?.value;
+	const refreshToken = request.cookies.get("refresh_token")?.value;
+	const hasAuth = accessToken || refreshToken;
+
+	// Allow public routes
+	if (publicPaths.some((path) => pathname.startsWith(path))) {
+		// If already logged in, redirect away from auth pages
+		if (hasAuth) {
+			return NextResponse.redirect(new URL("/", request.url));
+		}
+		return NextResponse.next();
+	}
+
+	// Protect all other routes
+	if (!hasAuth) {
+		return NextResponse.redirect(new URL("/auth/login", request.url));
+	}
+
+	return NextResponse.next();
 }
 
-// Alternatively, you can use a default export:
-// export default function proxy(request: NextRequest) { ... }
-
 export const config = {
-	matcher: "/api/:path*",
+	matcher: ["/((?!_next/static|_next/image|favicon.ico|api).*)"],
 };

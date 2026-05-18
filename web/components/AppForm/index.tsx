@@ -1,28 +1,47 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useActionState } from "react";
+import { useFormStatus } from "react-dom";
 
 // Components.
 import { Button, Input, Label } from "@/components/ui";
 
 // Lucide.
-import { LogIn } from "lucide-react";
+import { LogIn, UserPlus, Loader2 } from "lucide-react";
 
 // Styles
 import "@/components/AppForm/styles.css";
 
 type AppFormProps = {
-  emailPlaceholder: string;
-  passwordPlaceholder: string;
-  onSubmit: (formData: FormData) => void;
+  onSubmit: (
+    prevState: { error: string } | null,
+    formData: FormData,
+  ) => Promise<{ error: string } | null>;
   type: "login" | "signUp";
 };
 
-const AppForm = ({
-  emailPlaceholder = "Email",
-  passwordPlaceholder = "Password",
-  onSubmit,
-  type = "login",
-}: AppFormProps) => {
+function SubmitButton({ type }: { type: "login" | "signUp" }) {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button type="submit" disabled={pending}>
+      {pending ? (
+        <Loader2 className="animate-spin" />
+      ) : type === "login" ? (
+        <LogIn />
+      ) : (
+        <UserPlus />
+      )}
+      {pending ? "Loading..." : type === "login" ? "Login" : "Sign Up"}
+    </Button>
+  );
+}
+
+const AppForm = ({ onSubmit, type = "login" }: AppFormProps) => {
+  const [state, formAction] = useActionState(onSubmit, null);
+
   const loginForm = () => {
     return (
       <div className="AppForm__Div">
@@ -35,8 +54,9 @@ const AppForm = ({
             <Input
               id="email-input"
               name="email"
-              type="text"
-              placeholder={emailPlaceholder}
+              type="email"
+              placeholder="Email"
+              required
             />
           </div>
           <div className="AppForm__Container--Label">
@@ -45,18 +65,20 @@ const AppForm = ({
               id="password-input"
               name="password"
               type="password"
-              placeholder={passwordPlaceholder}
+              placeholder="Password"
+              required
+              minLength={8}
             />
           </div>
         </section>
+        {state?.error && (
+          <p className="AppForm__Error">{state.error}</p>
+        )}
         <div className="AppForm__Container--Buttons">
-          <Button type="submit">
-            <LogIn />
-            Login
-          </Button>
+          <SubmitButton type="login" />
           <span>
-            {"Don't have a account?"}{" "}
-            <Link href="/auth/sign-up" className="AppForm__Container--SignUp">
+            {"Don't have an account?"}{" "}
+            <Link href="/auth/sign-up" className="AppForm__Container--Link">
               Sign Up
             </Link>
           </span>
@@ -73,13 +95,44 @@ const AppForm = ({
         </section>
         <section className="AppForm__Container">
           <div className="AppForm__Container--Label">
+            <Label htmlFor="username-input">Username</Label>
+            <Input
+              id="username-input"
+              name="username"
+              type="text"
+              placeholder="Username"
+              required
+            />
+          </div>
+          <div className="AppForm__Container--Label">
             <Label htmlFor="email-input">Email</Label>
             <Input
               id="email-input"
               name="email"
-              type="text"
-              placeholder={emailPlaceholder}
+              type="email"
+              placeholder="Email"
+              required
             />
+          </div>
+          <div className="AppForm__Container--Row">
+            <div className="AppForm__Container--Label">
+              <Label htmlFor="first-name-input">First Name</Label>
+              <Input
+                id="first-name-input"
+                name="first_name"
+                type="text"
+                placeholder="First Name"
+              />
+            </div>
+            <div className="AppForm__Container--Label">
+              <Label htmlFor="last-name-input">Last Name</Label>
+              <Input
+                id="last-name-input"
+                name="last_name"
+                type="text"
+                placeholder="Last Name"
+              />
+            </div>
           </div>
           <div className="AppForm__Container--Label">
             <Label htmlFor="password-input">Password</Label>
@@ -87,19 +140,32 @@ const AppForm = ({
               id="password-input"
               name="password"
               type="password"
-              placeholder={passwordPlaceholder}
+              placeholder="Password"
+              required
+              minLength={8}
+            />
+          </div>
+          <div className="AppForm__Container--Label">
+            <Label htmlFor="password-confirm-input">Confirm Password</Label>
+            <Input
+              id="password-confirm-input"
+              name="password_confirm"
+              type="password"
+              placeholder="Confirm Password"
+              required
+              minLength={8}
             />
           </div>
         </section>
+        {state?.error && (
+          <p className="AppForm__Error">{state.error}</p>
+        )}
         <div className="AppForm__Container--Buttons">
-          <Button type="submit">
-            <LogIn />
-            Login
-          </Button>
+          <SubmitButton type="signUp" />
           <span>
-            {"Don't have a account?"}{" "}
-            <Link href="/auth/sign-up" className="AppForm__Container--SignUp">
-              Sign Up
+            {"Already have an account?"}{" "}
+            <Link href="/auth/login" className="AppForm__Container--Link">
+              Login
             </Link>
           </span>
         </div>
@@ -108,7 +174,7 @@ const AppForm = ({
   };
 
   return (
-    <form className="AppForm" action={onSubmit}>
+    <form className="AppForm" action={formAction}>
       {{ signUp: registerForm(), login: loginForm() }[type]}
     </form>
   );
