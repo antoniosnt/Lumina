@@ -4,13 +4,18 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { axiosInstance } from "@/lib/utils";
 
+import { AxiosError } from "axios";
+
 export default async function loginAction(
 	_prevState: { error: string } | null,
 	formData: FormData,
 ): Promise<{ error: string } | null> {
+	const identifier = (formData.get("identifier") || formData.get("email") || "") as string;
+	const password = (formData.get("password") || "") as string;
+
 	const payload = {
-		username: formData.get("email") as string,
-		password: formData.get("password") as string,
+		username: identifier.trim(),
+		password,
 	};
 
 	try {
@@ -34,7 +39,10 @@ export default async function loginAction(
 			sameSite: "lax",
 			path: "/",
 		});
-	} catch {
+	} catch (e) {
+		if (e instanceof AxiosError && e.response?.data?.detail) {
+			return { error: String(e.response.data.detail) };
+		}
 		return { error: "Invalid credentials. Please try again." };
 	}
 

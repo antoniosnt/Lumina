@@ -5,10 +5,13 @@
   justify-content: center;
   border: 1px solid var(--secondary);
   border-radius: 12px;
+  width: 100%;
+  max-width: 440px;
 }
 
 .AppForm__Div {
-  margin: 32px;
+  width: 100%;
+  padding: 32px 24px;
 }
 
 .AppForm__Container {
@@ -16,24 +19,36 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 24px;
+  width: 100%;
+}
+
+.AppForm__Container:first-child {
+  margin-bottom: 20px;
+}
+
+.AppForm__Container:nth-child(2) {
+  gap: 12px;
 }
 
 .AppForm__Container--Label {
   display: flex;
   flex-direction: column;
-  align-items: start;
-  justify-content: start;
-  margin: 32px 32px 0 32px;
+  align-items: flex-start;
+  justify-content: flex-start;
   width: 100%;
-  gap: 10px;
+  gap: 6px;
+  margin: 0;
 }
 
 .AppForm__Container--Row {
   display: flex;
   flex-direction: row;
-  gap: 16px;
+  gap: 12px;
   width: 100%;
+}
+
+.AppForm__Container--Row > .AppForm__Container--Label {
+  flex: 1;
 }
 
 .AppForm__Container--Buttons {
@@ -41,9 +56,13 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 12px;
   width: 100%;
-  margin: 64px 0 0 0;
+  margin-top: 24px;
+}
+
+.AppForm__Container--Buttons button {
+  width: 100%;
 }
 
 .AppForm__Container--Link {
@@ -55,5 +74,5 @@
   color: var(--destructive);
   text-align: center;
   font-size: 0.875rem;
-  margin-top: 8px;
+  margin-top: 12px;
 }

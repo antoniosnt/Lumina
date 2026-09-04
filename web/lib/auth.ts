@@ -23,7 +23,6 @@ export async function getCurrentUser(): Promise<User | null> {
 		const response = await axiosInstance("/api/auth/me/", token).get();
 		return response.data as User;
 	} catch {
-		// Token might be expired, try refreshing
 		const newToken = await refreshAccessToken();
 		if (!newToken) return null;
 

@@ -15,7 +15,6 @@ export default async function logoutAction() {
 				refresh: refreshToken,
 			});
 		} catch {
-			// Silently fail - we still want to clear cookies
 		}
 	}
 

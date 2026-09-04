@@ -5,13 +5,8 @@ import Link from "next/link";
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 
-// Components.
 import { Button, Input, Label } from "@/components/ui";
-
-// Lucide.
 import { LogIn, UserPlus, Loader2 } from "lucide-react";
-
-// Styles
 import "@/components/AppForm/styles.css";
 
 type AppFormProps = {
@@ -26,7 +21,7 @@ function SubmitButton({ type }: { type: "login" | "signUp" }) {
   const { pending } = useFormStatus();
 
   return (
-    <Button type="submit" disabled={pending}>
+    <Button type="submit" disabled={pending} className="w-full">
       {pending ? (
         <Loader2 className="animate-spin" />
       ) : type === "login" ? (
@@ -50,12 +45,12 @@ const AppForm = ({ onSubmit, type = "login" }: AppFormProps) => {
         </section>
         <section className="AppForm__Container">
           <div className="AppForm__Container--Label">
-            <Label htmlFor="email-input">Email</Label>
+            <Label htmlFor="identifier-input">Username or Email</Label>
             <Input
-              id="email-input"
-              name="email"
-              type="email"
-              placeholder="Email"
+              id="identifier-input"
+              name="identifier"
+              type="text"
+              placeholder="Username or Email"
               required
             />
           </div>

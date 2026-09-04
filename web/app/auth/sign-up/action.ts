@@ -19,10 +19,8 @@ export default async function signUpAction(
 	};
 
 	try {
-		// Register the user
 		await axiosInstance("/api/auth/register/").post(payload);
 
-		// Auto-login after registration
 		const loginResponse = await axiosInstance("/api/auth/login/").post({
 			username: payload.username,
 			password: payload.password,

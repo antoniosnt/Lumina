@@ -1,7 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-// Axios.
 import axios from "axios";
 
 export function cn(...inputs: ClassValue[]) {
@@ -14,7 +13,6 @@ export function formatPayloadEntries(formData: FormData) {
 	return Object.fromEntries(filtered);
 }
 
-// Axios instance with base url and custom headers.
 const api = axios.create({
 	baseURL: process.env.NEXT_SERVER_API,
 	headers: {
@@ -22,7 +20,6 @@ const api = axios.create({
 	},
 });
 
-// Factory to create axios instance with url.
 export function axiosInstance(url: string, token?: string) {
 	return {
 		get: <T>(params?: Record<string, string>) =>

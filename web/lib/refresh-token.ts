@@ -18,28 +18,32 @@ export async function refreshAccessToken(): Promise<string | null> {
 		};
 
 		const secure = process.env.NODE_ENV === "production";
-		cookieStore.set("access_token", access, {
-			httpOnly: true,
-			secure,
-			sameSite: "lax",
-			path: "/",
-		});
-
-		// SimpleJWT with rotation returns a new refresh token
-		if (refresh) {
-			cookieStore.set("refresh_token", refresh, {
+		try {
+			cookieStore.set("access_token", access, {
 				httpOnly: true,
 				secure,
 				sameSite: "lax",
 				path: "/",
 			});
+
+			if (refresh) {
+				cookieStore.set("refresh_token", refresh, {
+					httpOnly: true,
+					secure,
+					sameSite: "lax",
+					path: "/",
+				});
+			}
+		} catch {
 		}
 
 		return access;
 	} catch {
-		// Refresh token is invalid or expired - clear cookies
-		cookieStore.delete("access_token");
-		cookieStore.delete("refresh_token");
+		try {
+			cookieStore.delete("access_token");
+			cookieStore.delete("refresh_token");
+		} catch {
+		}
 		return null;
 	}
 }
